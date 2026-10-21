@@ -11,6 +11,15 @@ function buildApp(dbPath) {
   app.use(cors({ origin: process.env.CORS_ORIGIN ?? 'http://localhost:5173' }));
   app.use(express.json());
   app.use(malformedJson);
+  app.get('/', (req, res) => {
+    res.json({
+      status: 'ok',
+      message: 'Task-Flow REST API is live',
+      endpoints: {
+        tasks: '/api/tasks'
+      }
+    });
+  });
   app.use('/api/tasks', taskRoutes(db));
   app.use(notFound);
   app.use(serverError);
